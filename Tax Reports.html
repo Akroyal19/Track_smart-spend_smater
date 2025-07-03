@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tax Reports | ExpenseTrack Pro</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .transition-all {
+            transition: all 0.3s ease;
+        }
+        .tax-year-active {
+            background-color: #667eea;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="gradient-bg text-white shadow-lg">
+        <div class="container mx-auto px-6 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <i class="fas fa-wallet text-2xl"></i>
+                    <span class="text-xl font-semibold">ExpenseTrack Pro</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="Track Smart, Spend Smarter.html" class="hover:text-gray-200">Dashboard</a>
+                    <a href="Income & Expense Tracking.html" class="hover:text-gray-200">Transactions</a>
+                    <a href="Budget management.html" class="hover:text-gray-200">Budgets</a>
+                    <a href="#" class="bg-white text-purple-700 px-4 py-2 rounded-md font-medium hover:bg-gray-100 transition-all">
+                        <i class="fas fa-file-export mr-2"></i>Tax Reports
+                    </a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="bg-white text-purple-700 px-4 py-2 rounded-md font-medium hover:bg-gray-100 transition-all">
+                        <i class="fas fa-user-circle mr-2"></i>Profile
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8">
+        <div class="flex flex-col md:flex-row gap-8">
+            <!-- Left Column - Report Options -->
+            <div class="md:w-1/3">
+                <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Generate Tax Report</h2>
+                    
+                    <div class="mb-6">
+                        <h3 class="text-lg font-semibold mb-3">Tax Year</h3>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button class="tax-year-btn py-2 px-4 rounded-md border border-gray-300 tax-year-active">2023</button>
+                            <button class="tax-year-btn py-2 px-4 rounded-md border border-gray-300">2022</button>
+                            <button class="tax-year-btn py-2 px-4 rounded-md border border-gray-300">2021</button>
+                            <button class="tax-year-btn py-2 px-4 rounded-md border border-gray-300">2020</button>
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <h3 class="text-lg font-semibold mb-3">Report Type</h3>
+                        <select class="w-full border border-gray-300 rounded-md py-2 px-3 focus:ring-purple-500 focus:border-purple-500">
+                            <option>Annual Summary</option>
+                            <option>Quarterly Summary</option>
+                            <option>Expense Breakdown</option>
+                            <option>Income Breakdown</option>
+                            <option>Business Expenses</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-6">
+                        <h3 class="text-lg font-semibold mb-3">Format</h3>
+                        <div class="flex space-x-4">
+                            <label class="inline-flex items-center">
+                                <input type="radio" class="form-radio text-purple-600" name="format" checked>
+                                <span class="ml-2">PDF</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" class="form-radio text-purple-600" name="format">
+                                <span class="ml-2">Excel</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" class="form-radio text-purple-600" name="format">
+                                <span class="ml-2">CSV</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button class="w-full gradient-bg text-white py-3 px-4 rounded-md hover:opacity-90 transition-all font-medium">
+                        <i class="fas fa-file-download mr-2"></i>Generate Report
+                    </button>
+                </div>
+
+                <!-- Quick Tips -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Tax Preparation Tips</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                            <span>Keep all receipts for deductible expenses</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                            <span>Separate business and personal expenses</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                            <span>Track mileage for business travel</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                            <span>Document charitable contributions</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Right Column - Report Preview -->
+            <div class="md:w-2/3">
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800">Report Preview</h2>
+                        <div class="flex space-x-2">
+                            <button class="bg-gray-100 text-gray-700 py-1 px-3 rounded-md text-sm hover:bg-gray-200 transition-all">
+                                <i class="fas fa-print mr-1"></i>Print
+                            </button>
+                            <button class="bg-gray-100 text-gray-700 py-1 px-3 rounded-md text-sm hover:bg-gray-200 transition-all">
+                                <i class="fas fa-share-alt mr-1"></i>Share
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Report Header -->
+                    <div class="border-b border-gray-200 pb-4 mb-6">
+                        <h3 class="text-lg font-semibold text-gray-800">Annual Tax Summary - 2023</h3>
+                        <p class="text-gray-600">Generated on November 15, 2023</p>
+                    </div>
+
+                    <!-- Financial Summary -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h4 class="text-sm font-medium text-gray-500 mb-1">Total Income</h4>
+                            <p class="text-2xl font-bold text-green-600">$58,420.00</p>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h4 class="text-sm font-medium text-gray-500 mb-1">Taxable Income</h4>
+                            <p class="text-2xl font-bold text-blue-600">$52,150.00</p>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h4 class="text-sm font-medium text-gray-500 mb-1">Estimated Tax</h4>
+                            <p class="text-2xl font-bold text-red-600">$12,150.00</p>
+                        </div>
+                    </div>
+
+                    <!-- Income Breakdown -->
+                    <div class="mb-8">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-3">Income Breakdown</h4>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Source</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Amount</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Taxable</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Salary</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$45,000.00</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Yes</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Freelance Work</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$8,500.00</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Yes</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Investment Income</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$3,200.00</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Partial</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Other Income</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$1,720.00</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">No</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Deductible Expenses -->
+                    <div class="mb-8">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-3">Deductible Expenses</h4>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Category</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Amount</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Deductible %</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Notes</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Home Office</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$3,200.00</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">100%</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">200 sq ft @ $16/sq ft</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Business Travel</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$1,850.00</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">100%</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">3 conferences</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Vehicle Expenses</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$2,400.00</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">65%</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">8,200 business miles</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Equipment</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$1,200.00</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">100%</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Laptop & software</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Tax Calculation -->
+                    <div class="bg-gray-50 p-6 rounded-lg">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-4">Tax Calculation Summary</h4>
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Taxable Income</span>
+                                <span class="font-medium">$52,150.00</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Tax Rate</span>
+                                <span class="font-medium">22%</span>
+                            </div>
+                            <div class="flex justify-between border-t border-gray-200 pt-2 mt-2">
+                                <span class="text-gray-800 font-semibold">Estimated Tax Owed</span>
+                                <span class="text-red-600 font-bold">$12,150.00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tax year selection
+        const taxYearBtns = document.querySelectorAll('.tax-year-btn');
+        taxYearBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                taxYearBtns.forEach(b => b.classList.remove('tax-year-active', 'bg-purple-600', 'text-white'));
+                this.classList.add('tax-year-active', 'bg-purple-600', 'text-white');
+            });
+        });
+
+        // Generate report button
+        document.querySelector('.gradient-bg').addEventListener('click', function() {
+            alert('Your tax report is being generated. You will receive a download link shortly.');
+        });
+    </script>
+</body>
+</html>

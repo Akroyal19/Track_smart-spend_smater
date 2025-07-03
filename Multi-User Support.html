@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-User Support | ExpenseTrack Pro</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .transition-all {
+            transition: all 0.3s ease;
+        }
+        .role-admin { background-color: #7C3AED; color: white; }
+        .role-manager { background-color: #3B82F6; color: white; }
+        .role-member { background-color: #10B981; color: white; }
+        .role-viewer { background-color: #64748B; color: white; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="gradient-bg text-white shadow-lg">
+        <div class="container mx-auto px-6 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <i class="fas fa-wallet text-2xl"></i>
+                    <span class="text-xl font-semibold">ExpenseTrack Pro</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="Track Smart, Spend Smarter.html" class="hover:text-gray-200">Dashboard</a>
+                    <a href="Income & Expense Tracking.html" class="hover:text-gray-200">Transactions</a>
+                    <a href="Budget management.html" class="hover:text-gray-200">Budgets</a>
+                    <a href="Tax Reports.html" class="hover:text-gray-200">Tax Reports</a>
+                    <a href="#" class="bg-white text-purple-700 px-4 py-2 rounded-md font-medium hover:bg-gray-100 transition-all">
+                        <i class="fas fa-users mr-2"></i>Team
+                    </a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="bg-white text-purple-700 px-4 py-2 rounded-md font-medium hover:bg-gray-100 transition-all">
+                        <i class="fas fa-user-circle mr-2"></i>Profile
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8">
+        <div class="flex flex-col">
+            <!-- Page Header -->
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
+                <div>
+                    <h1 class="text-3xl font-bold text-gray-800">Team Management</h1>
+                    <p class="text-gray-600">Track family or team expenses with role-based access control</p>
+                </div>
+                <button class="mt-4 md:mt-0 gradient-bg text-white py-2 px-4 rounded-md hover:opacity-90 transition-all font-medium">
+                    <i class="fas fa-user-plus mr-2"></i>Invite Member
+                </button>
+            </div>
+
+            <!-- Team Stats -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                <div class="bg-white p-5 rounded-lg shadow-sm">
+                    <h3 class="text-gray-500 text-sm font-medium">Total Members</h3>
+                    <p class="text-2xl font-bold text-purple-600 mt-1">8</p>
+                    <p class="text-gray-400 text-sm mt-2"><i class="fas fa-users mr-1"></i>Active team</p>
+                </div>
+                <div class="bg-white p-5 rounded-lg shadow-sm">
+                    <h3 class="text-gray-500 text-sm font-medium">Active Groups</h3>
+                    <p class="text-2xl font-bold text-blue-600 mt-1">3</p>
+                    <p class="text-gray-400 text-sm mt-2"><i class="fas fa-folder mr-1"></i>Family, Business, Travel</p>
+                </div>
+                <div class="bg-white p-5 rounded-lg shadow-sm">
+                    <h3 class="text-gray-500 text-sm font-medium">Shared Expenses</h3>
+                    <p class="text-2xl font-bold text-green-600 mt-1">47</p>
+                    <p class="text-gray-400 text-sm mt-2"><i class="fas fa-exchange-alt mr-1"></i>This month</p>
+                </div>
+                <div class="bg-white p-5 rounded-lg shadow-sm">
+                    <h3 class="text-gray-500 text-sm font-medium">Pending Invites</h3>
+                    <p class="text-2xl font-bold text-yellow-600 mt-1">2</p>
+                    <p class="text-gray-400 text-sm mt-2"><i class="fas fa-envelope mr-1"></i>Waiting for response</p>
+                </div>
+            </div>
+
+            <!-- Team Members -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-xl font-semibold text-gray-800">Team Members</h2>
+                    <div class="flex space-x-2">
+                        <button class="bg-gray-100 text-gray-700 py-1 px-3 rounded-md text-sm hover:bg-gray-200 transition-all">
+                            <i class="fas fa-filter mr-1"></i>Filter
+                        </button>
+                        <button class="bg-gray-100 text-gray-700 py-1 px-3 rounded-md text-sm hover:bg-gray-200 transition-all">
+                            <i class="fas fa-download mr-1"></i>Export
+                        </button>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Member</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Role</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Groups</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Last Active</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 h-10 w-10 rounded-full bg-purple-100 flex items-center justify-center">
+                                            <i class="fas fa-user text-purple-600"></i>
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900">You</div>
+                                            <div class="text-sm text-gray-500">admin@example.com</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full role-admin">Admin</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">All Groups</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Just now</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <button class="text-purple-600 hover:text-purple-900 mr-3"><i class="fas fa-cog"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
+                                            <i class="fas fa-user text-blue-600"></i>
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900">Sarah Johnson</div>
+                                            <div class="text-sm text-gray-500">sarah@example.com</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full role-manager">Manager</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Family, Travel</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2 hours ago</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <button class="text-purple-600 hover:text-purple-900 mr-3"><i class="fas fa-cog"></i></button>
+                                    <button class="text-red-600 hover:text-red-900"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 h-10 w-10 rounded-full bg-green-100 flex items-center justify-center">
+                                            <i class="fas fa-user text-green-600"></i>
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900">Michael Chen</div>
+                                            <div class="text-sm text-gray-500">michael@example.com</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full role-member">Member</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Family</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1 day ago</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <button class="text-purple-600 hover:text-purple-900 mr-3"><i class="fas fa-cog"></i></button>
+                                    <button class="text-red-600 hover:text-red-900"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center">
+                                            <i class="fas fa-user text-gray-600"></i>
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900">David Wilson</div>
+                                            <div class="text-sm text-gray-500">david@example.com</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full role-viewer">Viewer</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Business</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">3 days ago</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <button class="text-purple-600 hover:text-purple-900 mr-3"><i class="fas fa-cog"></i></button>
+                                    <button class="text-red-600 hover:text-red-900"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 h-10 w-10 rounded-full bg-yellow-100 flex items-center justify-center">
+                                            <i class="fas fa-user text-yellow-600"></i>
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900">Emily Rodriguez</div>
+                                            <div class="text-sm text-gray-500">emily@example.com</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Pending</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">-</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Invited 5 days ago</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">Invited</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <button class="text-purple-600 hover:text-purple-900 mr-3"><i class="fas fa-envelope"></i></button>
+                                    <button class="text-red-600 hover:text-red-900"><i class="fas fa-times"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Role Permissions -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                <h2 class="text-xl font-semibold text-gray-800 mb-6">Role Permissions</h2>
+                
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Permission</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Admin</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Manager</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Member</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Viewer</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Add/Edit Transactions</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><i class="fas fa-check text-green-500"></i></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><i class="fas fa-check text-green-500"></i></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><i class="fas fa-check text-green-500"></i></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><i class="fas fa-times text-red-500"></i></td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Delete Transactions</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><i class="fas fa-check text-green-500"></i></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><i class="fas fa-check text-green-500"></i></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><i class="fas fa-times text-red-500"></i></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><i class="fas fa-times text-red-500"></i></td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Create Budgets</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><i class="fas fa-check text-green-500"></i></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><i class="fas fa-check text-green-500"></i></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><i class="fas fa-times text-red-500"></i></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><i class="fas fa-times text-red-500"></i></td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Invite Members</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><i class="fas fa-check text-green-500"></i></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><i class="fas fa-times text-red-500"></i></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><i class="fas fa-times text-red-500"></i></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><i class="fas fa-times text-red-500"></i></td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Manage Groups</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><i class="fas fa-check text-green-500"></i></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><i class="fas fa-check text-green-500"></i></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><i class="fas fa-times text-red-500"></i></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><i class="fas fa-times text-red-500"></i></td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Generate Reports</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><i class="fas fa-check text-green-500"></i></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><i class="fas fa-check text-green-500"></i></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><i class="fas fa-check text-green-500"></i></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><i class="fas fa-check text-green-500"></i></td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Export Data</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><i class="fas fa-check text-green-500"></i></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><i class="fas fa-check text-green-500"></i></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><i class="fas fa-times text-red-500"></i></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><i class="fas fa-times text-red-500"></i></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Expense Groups -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-xl font-semibold text-gray-800">Expense Groups</h2>
+                    <button class="gradient-bg text-white py-2 px-4 rounded-md hover:opacity-90 transition-all font-medium">
+                        <i class="fas fa-plus mr-2"></i>New Group
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Family Group -->
+                    <div class="border border-gray-200 rounded-lg p-5 hover:shadow-md transition-all">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-800">Family</h3>
+                                <p class="text-sm text-gray-500">Shared household expenses</p>
+                            </div>
+                            <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded">Default</span>
+                        </div>
+                        <div class="flex items-center text-sm text-gray-500 mb-3">
+                            <i class="fas fa-users mr-2"></i>
+                            <span>4 members</span>
+                        </div>
+                        <div class="flex items-center text-sm text-gray-500 mb-4">
+                            <i class="fas fa-exchange-alt mr-2"></i>
+                            <span>23 shared transactions</span>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button class="flex-1 bg-gray-100 text-gray-700 py-1 px-3 rounded-md text-sm hover:bg-gray-200 transition-all">
+                                <i class="fas fa-eye mr-1"></i>View
+                            </button>
+                            <button class="flex-1 bg-gray-100 text-gray-700 py-1 px-3 rounded-md text-sm hover:bg-gray-200 transition-all">
+                                <i class="fas fa-cog mr-1"></i>Manage
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Business Group -->
+                    <div class="border border-gray-200 rounded-lg p-5 hover:shadow-md transition-all">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-800">Business</h3>
+                                <p class="text-sm text-gray-500">Team project expenses</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center text-sm text-gray-500 mb-3">
+                            <i class="fas fa-users mr-2"></i>
+                            <span>3 members</span>
+                        </div>
+                        <div class="flex items-center text-sm text-gray-500 mb-4">
+                            <i class="fas fa-exchange-alt mr-2"></i>
+                            <span>12 shared transactions</span>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button class="flex-1 bg-gray-100 text-gray-700 py-1 px-3 rounded-md text-sm hover:bg-gray-200 transition-all">
+                                <i class="fas fa-eye mr-1"></i>View
+                            </button>
+                            <button class="flex-1 bg-gray-100 text-gray-700 py-1 px-3 rounded-md text-sm hover:bg-gray-200 transition-all">
+                                <i class="fas fa-cog mr-1"></i>Manage
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Travel Group -->
+                    <div class="border border-gray-200 rounded-lg p-5 hover:shadow-md transition-all">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-800">Summer Trip</h3>
+                                <p class="text-sm text-gray-500">Vacation expenses</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center text-sm text-gray-500 mb-3">
+                            <i class="fas fa-users mr-2"></i>
+                            <span>2 members</span>
+                        </div>
+                        <div class="flex items-center text-sm text-gray-500 mb-4">
+                            <i class="fas fa-exchange-alt mr-2"></i>
+                            <span>8 shared transactions</span>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button class="flex-1 bg-gray-100 text-gray-700 py-1 px-3 rounded-md text-sm hover:bg-gray-200 transition-all">
+                                <i class="fas fa-eye mr-1"></i>View
+                            </button>
+                            <button class="flex-1 bg-gray-100 text-gray-700 py-1 px-3 rounded-md text-sm hover:bg-gray-200 transition-all">
+                                <i class="fas fa-cog mr-1"></i>Manage
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simple script for the invite member modal (would be expanded in a real implementation)
+        document.querySelector('.gradient-bg').addEventListener('click', function() {
+            alert('Invite member modal would appear here with email input and role selection');
+        });
+    </script>
+</body>
+</html>

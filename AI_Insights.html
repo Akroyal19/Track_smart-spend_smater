@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Insights | ExpenseTrack Pro</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .transition-all {
+            transition: all 0.3s ease;
+        }
+        .ai-pulse {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(102, 126, 234, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="gradient-bg text-white shadow-lg">
+        <div class="container mx-auto px-6 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <i class="fas fa-wallet text-2xl"></i>
+                    <span class="text-xl font-semibold">ExpenseTrack Pro</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="Track Smart, Spend Smarter.html" class="hover:text-gray-200">Dashboard</a>
+                    <a href="#" class="hover:text-gray-200">Transactions</a>
+                    <a href="Budget management.html" class="hover:text-gray-200">Budgets</a>
+                    <a href="#" class="bg-white text-purple-700 px-4 py-2 rounded-md font-medium hover:bg-gray-100 transition-all">
+                        <i class="fas fa-robot mr-2"></i>AI Insights
+                    </a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="bg-white text-purple-700 px-4 py-2 rounded-md font-medium hover:bg-gray-100 transition-all">
+                        <i class="fas fa-user-circle mr-2"></i>Profile
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- AI Insights Header -->
+    <section class="gradient-bg text-white py-12">
+        <div class="container mx-auto px-6 text-center">
+            <div class="max-w-3xl mx-auto">
+                <h1 class="text-4xl md:text-5xl font-bold mb-6">AI-Powered Financial Insights</h1>
+                <p class="text-xl mb-8">Get smart savings recommendations and predictive budgeting suggestions tailored to your spending patterns.</p>
+                <div class="bg-white bg-opacity-10 rounded-lg p-4 inline-flex items-center">
+                    <i class="fas fa-robot text-3xl mr-3 ai-pulse"></i>
+                    <span class="text-lg">Currently analyzing your last 90 days of transactions...</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Left Column - AI Recommendations -->
+            <div class="lg:w-2/3">
+                <!-- Savings Opportunities -->
+                <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800">
+                            <i class="fas fa-lightbulb text-yellow-400 mr-2"></i> 
+                            Savings Opportunities
+                        </h2>
+                        <span class="bg-green-100 text-green-800 text-sm font-medium px-3 py-1 rounded-full">
+                            Updated 2 hours ago
+                        </span>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <!-- Recommendation 1 -->
+                        <div class="flex items-start p-4 border border-gray-200 rounded-lg card-hover transition-all">
+                            <div class="bg-blue-100 text-blue-800 p-3 rounded-full mr-4">
+                                <i class="fas fa-utensils text-lg"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-lg font-semibold mb-1">Reduce Dining Out Expenses</h3>
+                                <p class="text-gray-600 mb-2">You're spending $420/month on restaurants. Cooking at home 2 more times per week could save you ~$150/month.</p>
+                                <div class="flex items-center text-sm text-gray-500">
+                                    <i class="fas fa-chart-line mr-1"></i>
+                                    <span>High confidence (85%) based on your food spending trends</span>
+                                </div>
+                            </div>
+                            <button class="bg-purple-100 text-purple-700 px-4 py-2 rounded-md text-sm font-medium hover:bg-purple-200 transition-all">
+                                View Plan
+                            </button>
+                        </div>
+                        
+                        <!-- Recommendation 2 -->
+                        <div class="flex items-start p-4 border border-gray-200 rounded-lg card-hover transition-all">
+                            <div class="bg-purple-100 text-purple-800 p-3 rounded-full mr-4">
+                                <i class="fas fa-subway text-lg"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-lg font-semibold mb-1">Transportation Optimization</h3>
+                                <p class="text-gray-600 mb-2">Your ride-sharing costs increased 32% last month. Consider public transit or carpooling to save ~$75/month.</p>
+                                <div class="flex items-center text-sm text-gray-500">
+                                    <i class="fas fa-chart-line mr-1"></i>
+                                    <span>Medium confidence (65%) based on location patterns</span>
+                                </div>
+                            </div>
+                            <button class="bg-purple-100 text-purple-700 px-4 py-2 rounded-md text-sm font-medium hover:bg-purple-200 transition-all">
+                                View Plan
+                            </button>
+                        </div>
+                        
+                        <!-- Recommendation 3 -->
+                        <div class="flex items-start p-4 border border-gray-200 rounded-lg card-hover transition-all">
+                            <div class="bg-green-100 text-green-800 p-3 rounded-full mr-4">
+                                <i class="fas fa-bolt text-lg"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-lg font-semibold mb-1">Utility Bill Savings</h3>
+                                <p class="text-gray-600 mb-2">Comparing local providers could reduce your electricity bill by 15-20%. Potential savings: ~$35/month.</p>
+                                <div class="flex items-center text-sm text-gray-500">
+                                    <i class="fas fa-chart-line mr-1"></i>
+                                    <span>High confidence (90%) based on regional averages</span>
+                                </div>
+                            </div>
+                            <button class="bg-purple-100 text-purple-700 px-4 py-2 rounded-md text-sm font-medium hover:bg-purple-200 transition-all">
+                                Compare Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Predictive Budgeting -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">
+                        <i class="fas fa-crystal-ball text-purple-500 mr-2"></i>
+                        Predictive Budget Forecast
+                    </h2>
+                    
+                    <div class="grid md:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h3 class="font-semibold text-gray-700 mb-2">Next Month's Projection</h3>
+                            <div class="flex items-end">
+                                <div class="text-3xl font-bold text-gray-800 mr-2">$1,950</div>
+                                <div class="text-red-500 text-sm mb-1">
+                                    <i class="fas fa-arrow-up mr-1"></i>12% increase
+                                </div>
+                            </div>
+                            <p class="text-gray-600 text-sm mt-2">Based on seasonal trends and your spending velocity</p>
+                        </div>
+                        
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h3 class="font-semibold text-gray-700 mb-2">Savings Potential</h3>
+                            <div class="flex items-end">
+                                <div class="text-3xl font-bold text-gray-800 mr-2">$625</div>
+                                <div class="text-green-500 text-sm mb-1">
+                                    <i class="fas fa-arrow-down mr-1"></i>22% possible
+                                </div>
+                            </div>
+                            <p class="text-gray-600 text-sm mt-2">If you implement our recommendations</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <canvas id="forecastChart" height="200"></canvas>
+                    </div>
+                    
+                    <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-info-circle text-blue-500 text-xl"></i>
+                            </div>
+                            <div class="ml-3">
+                                <h3 class="text-sm font-medium text-blue-800">AI Tip</h3>
+                                <div class="mt-1 text-sm text-blue-700">
+                                    <p>Based on your spending patterns, we recommend increasing your emergency fund allocation by $100/month to reach your financial safety net goal 3 months earlier.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Column - AI Assistant -->
+            <div class="lg:w-1/3">
+                <!-- AI Financial Assistant -->
+                <div class="bg-white rounded-lg shadow-md p-6 mb-6 sticky top-4">
+                    <div class="flex items-center mb-6">
+                        <div class="relative">
+                            <div class="bg-purple-100 text-purple-800 w-16 h-16 rounded-full flex items-center justify-center">
+                                <i class="fas fa-robot text-3xl"></i>
+                            </div>
+                            <span class="absolute bottom-0 right-0 bg-green-500 rounded-full w-4 h-4 border-2 border-white"></span>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-xl font-bold">FinBot Assistant</h3>
+                            <p class="text-gray-600">Your AI financial advisor</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gray-50 rounded-lg p-4 mb-4" style="min-height: 200px;">
+                        <div class="flex mb-3">
+                            <div class="bg-purple-100 text-purple-800 w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="ml-3 bg-white p-3 rounded-lg shadow-sm">
+                                <p class="text-sm">Hi there! I've analyzed your spending patterns. How can I help you today?</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex justify-end mb-3">
+                            <div class="mr-3 bg-blue-100 p-3 rounded-lg shadow-sm max-w-xs">
+                                <p class="text-sm">What's my biggest spending category last month?</p>
+                            </div>
+                            <div class="bg-blue-100 text-blue-800 w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-user"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="flex">
+                            <div class="bg-purple-100 text-purple-800 w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="ml-3 bg-white p-3 rounded-lg shadow-sm">
+                                <p class="text-sm">Your biggest category was Dining Out at $420 (28% of expenses). Would you like suggestions to reduce this?</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex">
+                        <input type="text" placeholder="Ask FinBot anything..." class="flex-1 border border-gray-300 rounded-l-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        <button class="bg-purple-600 text-white px-4 py-2 rounded-r-md hover:bg-purple-700 transition-all">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="mt-4 grid grid-cols-2 gap-2">
+                        <button class="bg-gray-100 text-gray-700 text-xs px-3 py-2 rounded-md hover:bg-gray-200 transition-all text-left">
+                            <i class="fas fa-wallet mr-1"></i> Savings tips
+                        </button>
+                        <button class="bg-gray-100 text-gray-700 text-xs px-3 py-2 rounded-md hover:bg-gray-200 transition-all text-left">
+                            <i class="fas fa-chart-line mr-1"></i> Trends
+                        </button>
+                        <button class="bg-gray-100 text-gray-700 text-xs px-3 py-2 rounded-md hover:bg-gray-200 transition-all text-left">
+                            <i class="fas fa-calendar mr-1"></i> Predictions
+                        </button>
+                        <button class="bg-gray-100 text-gray-700 text-xs px-3 py-2 rounded-md hover:bg-gray-200 transition-all text-left">
+                            <i class="fas fa-bullseye mr-1"></i> Goals
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Spending Patterns -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h2 class="text-xl font-bold text-gray-800 mb-4">
+                        <i class="fas fa-project-diagram text-purple-500 mr-2"></i>
+                        Spending Patterns
+                    </h2>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium text-gray-700">Dining Out</span>
+                                <span class="text-sm font-medium text-gray-700">28% ↑</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-red-500 h-2 rounded-full" style="width: 28%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium text-gray-700">Entertainment</span>
+                                <span class="text-sm font-medium text-gray-700">15% ↓</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-yellow-500 h-2 rounded-full" style="width: 15%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium text-gray-700">Transportation</span>
+                                <span class="text-sm font-medium text-gray-700">22% ↑↑</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-blue-500 h-2 rounded-full" style="width: 22%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium text-gray-700">Utilities</span>
+                                <span class="text-sm font-medium text-gray-700">12% →</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-green-500 h-2 rounded-full" style="width: 12%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 bg-purple-50 border border-purple-200 rounded-lg p-4">
+                        <h3 class="font-semibold text-purple-800 mb-2">
+                            <i class="fas fa-star mr-1"></i> Pattern Insight
+                        </h3>
+                        <p class="text-sm text-purple-700">You consistently spend 18-22% more on weekends. Setting a weekend budget could help control this.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize forecast chart
+        document.addEventListener('DOMContentLoaded', function() {
+            const forecastCtx = document.getElementById('forecastChart').getContext('2d');
+            new Chart(forecastCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+                    datasets: [
+                        {
+                            label: 'Actual Spending',
+                            data: [1850, 1720, 1920, 1810, 1740, 1950, null, null, null],
+                            borderColor: '#667eea',
+                            backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                            borderWidth: 2,
+                            tension: 0.3,
+                            fill: true
+                        },
+                        {
+                            label: 'AI Forecast',
+                            data: [null, null, null, null, null, 1950, 2100, 2050, 1980],
+                            borderColor: '#764ba2',
+                            backgroundColor: 'rgba(118, 75, 162, 0.1)',
+                            borderWidth: 2,
+                            borderDash: [5, 5],
+                            tension: 0.3,
+                            fill: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                boxWidth: 12,
+                                padding: 20
+                            }
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            grid: {
+                                drawBorder: false
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + value;
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

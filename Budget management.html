@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Management | ExpenseTrack Pro</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .transition-all {
+            transition: all 0.3s ease;
+        }
+        .progress-bar {
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            transition: width 0.5s ease;
+        }
+        .alert-pulse {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="gradient-bg text-white shadow-lg">
+        <div class="container mx-auto px-6 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <i class="fas fa-wallet text-2xl"></i>
+                    <span class="text-xl font-semibold">ExpenseTrack Pro</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="dashboard.html" class="hover:text-gray-200">Dashboard</a>
+                    <a href="transactions.html" class="hover:text-gray-200">Transactions</a>
+                    <a href="budget.html" class="font-bold hover:text-gray-200">Budget</a>
+                    <a href="reports.html" class="hover:text-gray-200">Reports</a>
+                    <button class="bg-white text-purple-700 px-4 py-2 rounded-md font-medium hover:bg-gray-100 transition-all">
+                        <i class="fas fa-user mr-2"></i>Account
+                    </button>
+                </div>
+                <button class="md:hidden focus:outline-none">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Budget Management Header -->
+    <section class="gradient-bg text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div>
+                    <h1 class="text-3xl md:text-4xl font-bold mb-2">Budget Management</h1>
+                    <p class="text-xl opacity-90">Set spending limits and get alerts when you're over budget</p>
+                </div>
+                <button id="new-budget-btn" class="mt-4 md:mt-0 bg-white text-purple-700 px-6 py-3 rounded-md font-medium hover:bg-gray-100 transition-all">
+                    <i class="fas fa-plus mr-2"></i>Create New Budget
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Budget Overview Cards -->
+    <section class="py-8 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Monthly Budget Summary -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-lg font-semibold text-gray-700 mb-4">Monthly Budget Summary</h3>
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-gray-600">Total Budget</span>
+                        <span class="font-medium" id="total-budget">$3,500</span>
+                    </div>
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-gray-600">Amount Spent</span>
+                        <span class="font-medium" id="amount-spent">$2,850</span>
+                    </div>
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-gray-600">Remaining</span>
+                        <span class="font-medium text-green-600" id="remaining-budget">$650</span>
+                    </div>
+                    <div class="progress-bar bg-gray-200 mb-2">
+                        <div class="progress-bar-fill bg-purple-600" style="width: 81%" id="budget-progress"></div>
+                    </div>
+                    <p class="text-sm text-gray-500 text-right">81% of budget used</p>
+                </div>
+
+                <!-- Budget Status -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-lg font-semibold text-gray-700 mb-4">Budget Status</h3>
+                    <div class="flex items-center mb-4">
+                        <div class="w-3 h-3 rounded-full bg-green-500 mr-2"></div>
+                        <span>7 categories within budget</span>
+                    </div>
+                    <div class="flex items-center mb-4">
+                        <div class="w-3 h-3 rounded-full bg-yellow-500 mr-2"></div>
+                        <span>2 categories close to limit</span>
+                    </div>
+                    <div class="flex items-center mb-4">
+                        <div class="w-3 h-3 rounded-full bg-red-500 mr-2"></div>
+                        <span>1 category over budget</span>
+                    </div>
+                    <div class="mt-6">
+                        <p class="text-sm text-gray-600">Next budget reset: <span class="font-medium">May 1, 2023</span></p>
+                    </div>
+                </div>
+
+                <!-- Budget Alerts -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-semibold text-gray-700">Budget Alerts</h3>
+                        <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded-full">3 New</span>
+                    </div>
+                    <div id="alerts-container">
+                        <!-- Alert items will be added here by JavaScript -->
+                        <div class="alert-pulse bg-red-50 border-l-4 border-red-500 p-4 mb-3 rounded">
+                            <div class="flex">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-exclamation-circle text-red-500"></i>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-sm text-red-700">
+                                        You've exceeded your <strong>Dining Out</strong> budget by $85
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 mb-3 rounded">
+                            <div class="flex">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-exclamation-triangle text-yellow-500"></i>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-sm text-yellow-700">
+                                        You're approaching your <strong>Shopping</strong> budget limit (90% used)
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
+                            <div class="flex">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-info-circle text-blue-500"></i>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-sm text-blue-700">
+                                        Your <strong>Groceries</strong> budget resets in 3 days
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Budget Categories Section -->
+    <section class="py-8 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-800">Budget Categories</h2>
+                <div class="flex space-x-2">
+                    <button class="px-3 py-1 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-all">
+                        <i class="fas fa-filter mr-1"></i> Filter
+                    </button>
+                    <button class="px-3 py-1 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-all">
+                        <i class="fas fa-sort mr-1"></i> Sort
+                    </button>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Budget</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Spent</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Remaining</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Progress</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200" id="budget-categories">
+                        <!-- Budget categories will be added here by JavaScript -->
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 h-10 w-10 bg-purple-100 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-utensils text-purple-600"></i>
+                                    </div>
+                                    <div class="ml-4">
+                                        <div class="text-sm font-medium text-gray-900">Dining Out</div>
+                                        <div class="text-sm text-gray-500">Restaurants, cafes, etc.</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">$500</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">$585</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-red-600">-$85</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="progress-bar bg-gray-200 w-full">
+                                    <div class="progress-bar-fill bg-red-500" style="width: 117%"></div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                    Over Budget
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                <button class="text-purple-600 hover:text-purple-900 mr-3">Edit</button>
+                                <button class="text-gray-600 hover:text-gray-900">View</button>
+                            </td>
+                        </tr>
+                        <!-- More rows would be added here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Create Budget Modal -->
+    <div id="budget-modal" class="fixed inset-0 z-50 hidden overflow-y-auto">
+        <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+            </div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div class="sm:flex sm:items-start">
+                        <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-purple-100 sm:mx-0 sm:h-10 sm:w-10">
+                            <i class="fas fa-wallet text-purple-600"></i>
+                        </div>
+                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                            <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                                Create New Budget
+                            </h3>
+                            <div class="mt-2">
+                                <form id="budget-form">
+                                    <div class="mb-4">
+                                        <label for="budget-category" class="block text-sm font-medium text-gray-700">Category</label>
+                                        <select id="budget-category" name="category" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm rounded-md">
+                                            <option value="">Select a category</option>
+                                            <option value="groceries">Groceries</option>
+                                            <option value="dining">Dining Out</option>
+                                            <option value="transportation">Transportation</option>
+                                            <option value="entertainment">Entertainment</option>
+                                            <option value="shopping">Shopping</option>
+                                            <option value="utilities">Utilities</option>
+                                            <option value="housing">Housing</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="budget-amount" class="block text-sm font-medium text-gray-700">Amount ($)</label>
+                                        <input type="number" id="budget-amount" name="amount" class="mt-1 focus:ring-purple-500 focus:border-purple-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="budget-period" class="block text-sm font-medium text-gray-700">Budget Period</label>
+                                        <select id="budget-period" name="period" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm rounded-md">
+                                            <option value="monthly">Monthly</option>
+                                            <option value="weekly">Weekly</option>
+                                            <option value="biweekly">Bi-Weekly</option>
+                                            <option value="quarterly">Quarterly</option>
+                                            <option value="yearly">Yearly</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="budget-start" class="block text-sm font-medium text-gray-700">Start Date</label>
+                                        <input type="date" id="budget-start" name="start_date" class="mt-1 focus:ring-purple-500 focus:border-purple-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                    </div>
+                                    <div>
+                                        <label for="budget-notes" class="block text-sm font-medium text-gray-700">Notes (Optional)</label>
+                                        <textarea id="budget-notes" name="notes" rows="3" class="mt-1 focus:ring-purple-500 focus:border-purple-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"></textarea>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <button type="button" id="save-budget" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-purple-600 text-base font-medium text-white hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:ml-3 sm:w-auto sm:text-sm">
+                        Save Budget
+                    </button>
+                    <button type="button" id="cancel-budget" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i class="fas fa-wallet text-2xl"></i>
+                        <span class="text-xl font-semibold">ExpenseTrack Pro</span>
+                    </div>
+                    <p class="text-gray-400">Smart budgeting, expense tracking, and financial insights - all in one place.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Product</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Features</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Pricing</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Mobile App</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Integrations</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Resources</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Blog</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Guides</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Help Center</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Webinars</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Company</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">About Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Careers</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Contact</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Press</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>© 2023 ExpenseTrack Pro. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // DOM Elements
+        const budgetModal = document.getElementById('budget-modal');
+        const newBudgetBtn = document.getElementById('new-budget-btn');
+        const saveBudgetBtn = document.getElementById('save-budget');
+        const cancelBudgetBtn = document.getElementById('cancel-budget');
+        const budgetForm = document.getElementById('budget-form');
+        const budgetCategoriesTable = document.getElementById('budget-categories');
+        const alertsContainer = document.getElementById('alerts-container');
+
+        // Sample budget data
+        const budgetData = [
+            {
+                id: 1,
+                category: 'Dining Out',
+                icon: 'utensils',
+                description: 'Restaurants, cafes, etc.',
+                budget: 500,
+                spent: 585,
+                period: 'monthly',
+                status: 'over'
+            },
+            {
+                id: 2,
+                category: 'Groceries',
+                icon: 'shopping-basket',
+                description: 'Supermarket purchases',
+                budget: 600,
+                spent: 540,
+                period: 'monthly',
+                status: 'under'
+            },
+            {
+                id: 3,
+                category: 'Shopping',
+                icon: 'tshirt',
+                description: 'Clothing, accessories',
+                budget: 400,
+                spent: 360,
+                period: 'monthly',
+                status: 'warning'
+            },
+            {
+                id: 4,
+                category: 'Entertainment',
+                icon: 'film',
+                description: 'Movies, concerts, events',
+                budget: 200,
+                spent: 150,
+                period: 'monthly',
+                status: 'under'
+            },
+            {
+                id: 5,
+                category: 'Transportation',
+                icon: 'bus',
+                description: 'Public transit, rideshares',
+                budget: 150,
+                spent: 120,
+                period: 'monthly',
+                status: 'under'
+            }
+        ];
+
+        // Sample alert data
+        const alertData = [
+            {
+                type: 'error',
+                message: "You've exceeded your <strong>Dining Out</strong> budget by $85",
+                icon: 'exclamation-circle'
+            },
+            {
+                type: 'warning',
+                message: "You're approaching your <strong>Shopping</strong> budget limit (90% used)",
+                icon: 'exclamation-triangle'
+            },
+            {
+                type: 'info',
+                message: "Your <strong>Groceries</strong> budget resets in 3 days",
+                icon: 'info-circle'
+            }
+        ];
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set today's date as default for budget start
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('budget-start').value = today;
+            
+            // Load budget data
+            renderBudgetCategories();
+            renderAlerts();
+            
+            // Calculate and display budget summary
+            updateBudgetSummary();
+        });
+
+        // Modal event handlers
+        newBudgetBtn.addEventListener('click', function() {
+            budgetModal.classList.remove('hidden');
+        });
+
+        cancelBudgetBtn.addEventListener('click', function() {
+            budgetModal.classList.add('hidden');
+            budgetForm.reset();
+        });
+
+        saveBudgetBtn.addEventListener('click', function() {
+            // In a real app, you would save to backend here
+            alert('Budget saved successfully!');
+            budgetModal.classList.add('hidden');
+            budgetForm.reset();
+            
+            // For demo purposes, we'll add a sample budget
+            const newBudget = {
+                id: Date.now(),
+                category: document.getElementById('budget-category').value,
+                icon: 'tag',
+                description: 'Custom budget',
+                budget: parseFloat(document.getElementById('budget-amount').value),
+                spent: 0,
+                period: document.getElementById('budget-period').value,
+                status: 'under'
+            };
+            
+            budgetData.push(newBudget);
+            renderBudgetCategories();
+            updateBudgetSummary();
+        });
+
+        // Render budget categories table
+        function renderBudgetCategories() {
+            budgetCategoriesTable.innerHTML = '';
+            
+            budgetData.forEach(budget => {
+                const percentage = (budget.spent / budget.budget) * 100;
+                let statusText, statusClass, progressColor;
+                
+                if (percentage > 100) {
+                    statusText = 'Over Budget';
+                    statusClass = 'bg-red-100 text-red-800';
+                    progressColor = 'bg-red-500';
+                } else if (percentage > 80) {
+                    statusText = 'Warning';
+                    statusClass = 'bg-yellow-100 text-yellow-800';
+                    progressColor = 'bg-yellow-500';
+                } else {
+                    statusText = 'On Track';
+                    statusClass = 'bg-green-100 text-green-800';
+                    progressColor = 'bg-green-500';
+                }
+                
+                const remaining = budget.budget - budget.spent;
+                const remainingText = remaining >= 0 ? `$${remaining.toFixed(2)}` : `-$${Math.abs(remaining).toFixed(2)}`;
+                const remainingClass = remaining >= 0 ? 'text-green-600' : 'text-red-600';
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 h-10 w-10 bg-purple-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-${budget.icon} text-purple-600"></i>
+                            </div>
+                            <div class="ml-4">
+                                <div class="text-sm font-medium text-gray-900">${budget.category}</div>
+                                <div class="text-sm text-gray-500">${budget.description}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">$${budget.budget.toFixed(2)}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">$${budget.spent.toFixed(2)}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm ${remainingClass}">${remainingText}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="progress-bar bg-gray-200 w-full">
+                            <div class="progress-bar-fill ${progressColor}" style="width: ${Math.min(percentage, 100)}%"></div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${statusClass}">
+                            ${statusText}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <button class="text-purple-600 hover:text-purple-900 mr-3">Edit</button>
+                        <button class="text-gray-600 hover:text-gray-900">View</button>
+                    </td>
+                `;
+                budgetCategoriesTable.appendChild(row);
+            });
+        }
+
+        // Render alerts
+        function renderAlerts() {
+            alertsContainer.innerHTML = '';
+            
+            alertData.forEach(alert => {
+                let alertClass, iconColor;
+                
+                if (alert.type === 'error') {
+                    alertClass = 'bg-red-50 border-l-4 border-red-500';
+                    iconColor = 'text-red-500';
+                } else if (alert.type === 'warning') {
+                    alertClass = 'bg-yellow-50 border-l-4 border-yellow-500';
+                    iconColor = 'text-yellow-500';
+                } else {
+                    alertClass = 'bg-blue-50 border-l-4 border-blue-500';
+                    iconColor = 'text-blue-500';
+                }
+                
+                const alertDiv = document.createElement('div');
+                alertDiv.className = `${alert.type === 'error' ? 'alert-pulse ' : ''}${alertClass} p-4 mb-3 rounded`;
+                alertDiv.innerHTML = `
+                    <div class="flex">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-${alert.icon} ${iconColor}"></i>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm ${alert.type === 'error' ? 'text-red-700' : alert.type === 'warning' ? 'text-yellow-700' : 'text-blue-700'}">
+                                ${alert.message}
+                            </p>
+                        </div>
+                    </div>
+                `;
+                alertsContainer.appendChild(alertDiv);
+            });
+        }
+
+        // Calculate and update budget summary
+        function updateBudgetSummary() {
+            const totalBudget = budgetData.reduce((sum, budget) => sum + budget.budget, 0);
+            const totalSpent = budgetData.reduce((sum, budget) => sum + budget.spent, 0);
+            const remaining = totalBudget - totalSpent;
+            const percentageUsed = (totalSpent / totalBudget) * 100;
+            
+            document.getElementById('total-budget').textContent = `$${totalBudget.toFixed(2)}`;
+            document.getElementById('amount-spent').textContent = `$${totalSpent.toFixed(2)}`;
+            document.getElementById('remaining-budget').textContent = `$${remaining.toFixed(2)}`;
+            document.getElementById('budget-progress').style.width = `${percentageUsed}%`;
+            
+            // Update the percentage text
+            document.querySelector('#budget-progress').parentElement.nextElementSibling.textContent = 
+                `${percentageUsed.toFixed(0)}% of budget used`;
+            
+            // Change color if over budget
+            if (percentageUsed > 100) {
+                document.getElementById('remaining-budget').classList.remove('text-green-600');
+                document.getElementById('remaining-budget').classList.add('text-red-600');
+                document.getElementById('budget-progress').classList.remove('bg-purple-600');
+                document.getElementById('budget-progress').classList.add('bg-red-500');
+            } else {
+                document.getElementById('remaining-budget').classList.remove('text-red-600');
+                document.getElementById('remaining-budget').classList.add('text-green-600');
+                document.getElementById('budget-progress').classList.remove('bg-red-500');
+                document.getElementById('budget-progress').classList.add('bg-purple-600');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual Analytics | ExpenseTrack Pro</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .transition-all {
+            transition: all 0.3s ease;
+        }
+        .filter-active {
+            background-color: #667eea;
+            color: white;
+        }
+        .chart-container {
+            position: relative;
+            height: 400px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="gradient-bg text-white shadow-lg">
+        <div class="container mx-auto px-6 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <i class="fas fa-wallet text-2xl"></i>
+                    <span class="text-xl font-semibold">ExpenseTrack Pro</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="Track Smart, Spend Smarter.html" class="hover:text-gray-200">Dashboard</a>
+                    <a href="Income & Expense Tracking.html" class="hover:text-gray-200">Transactions</a>
+                    <a href="Budget management.html" class="hover:text-gray-200">Budgets</a>
+                    <a href="Tax Reports.html" class="hover:text-gray-200">Tax Reports</a>
+                    <a href="#" class="bg-white text-purple-700 px-4 py-2 rounded-md font-medium hover:bg-gray-100 transition-all">
+                        <i class="fas fa-chart-line mr-2"></i>Analytics
+                    </a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="bg-white text-purple-700 px-4 py-2 rounded-md font-medium hover:bg-gray-100 transition-all">
+                        <i class="fas fa-user-circle mr-2"></i>Profile
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8">
+        <div class="flex flex-col">
+            <!-- Page Header -->
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
+                <div>
+                    <h1 class="text-3xl font-bold text-gray-800">Visual Analytics</h1>
+                    <p class="text-gray-600">Interactive charts and graphs to visualize your spending patterns over time</p>
+                </div>
+                <div class="mt-4 md:mt-0 flex space-x-2">
+                    <div class="relative">
+                        <select class="appearance-none bg-white border border-gray-300 rounded-md py-2 pl-3 pr-8 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500">
+                            <option>Last 30 Days</option>
+                            <option>Last 3 Months</option>
+                            <option selected>Last 6 Months</option>
+                            <option>This Year</option>
+                            <option>Custom Range</option>
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <button class="bg-white border border-gray-300 rounded-md py-2 px-4 hover:bg-gray-50 transition-all">
+                        <i class="fas fa-download mr-2"></i>Export
+                    </button>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="bg-white rounded-lg shadow-md p-4 mb-6">
+                <div class="flex flex-wrap gap-2">
+                    <button class="filter-btn py-2 px-4 rounded-md border border-gray-300 filter-active">Overview</button>
+                    <button class="filter-btn py-2 px-4 rounded-md border border-gray-300">Spending</button>
+                    <button class="filter-btn py-2 px-4 rounded-md border border-gray-300">Income</button>
+                    <button class="filter-btn py-2 px-4 rounded-md border border-gray-300">Savings</button>
+                    <button class="filter-btn py-2 px-4 rounded-md border border-gray-300">Categories</button>
+                    <button class="filter-btn py-2 px-4 rounded-md border border-gray-300">Trends</button>
+                </div>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                <div class="bg-white p-5 rounded-lg shadow-sm">
+                    <h3 class="text-gray-500 text-sm font-medium">Total Spending</h3>
+                    <p class="text-2xl font-bold text-red-600 mt-1">$8,450</p>
+                    <p class="text-gray-400 text-sm mt-2"><i class="fas fa-arrow-up mr-1 text-red-500"></i>12% from last period</p>
+                </div>
+                <div class="bg-white p-5 rounded-lg shadow-sm">
+                    <h3 class="text-gray-500 text-sm font-medium">Total Income</h3>
+                    <p class="text-2xl font-bold text-green-600 mt-1">$12,800</p>
+                    <p class="text-gray-400 text-sm mt-2"><i class="fas fa-arrow-down mr-1 text-green-500"></i>5% from last period</p>
+                </div>
+                <div class="bg-white p-5 rounded-lg shadow-sm">
+                    <h3 class="text-gray-500 text-sm font-medium">Savings Rate</h3>
+                    <p class="text-2xl font-bold text-blue-600 mt-1">34%</p>
+                    <div class="w-full bg-gray-200 rounded-full h-2 mt-3">
+                        <div class="bg-blue-500 h-2 rounded-full" style="width: 34%"></div>
+                    </div>
+                </div>
+                <div class="bg-white p-5 rounded-lg shadow-sm">
+                    <h3 class="text-gray-500 text-sm font-medium">Top Category</h3>
+                    <p class="text-2xl font-bold text-purple-600 mt-1">Food & Dining</p>
+                    <p class="text-gray-400 text-sm mt-2">$2,150 (25% of spending)</p>
+                </div>
+            </div>
+
+            <!-- Main Chart -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-xl font-semibold text-gray-800">Spending vs Income Trend</h2>
+                    <div class="flex space-x-2">
+                        <button class="chart-type-btn bg-purple-100 text-purple-700 py-1 px-3 rounded-md text-sm hover:bg-purple-200 transition-all active" data-type="line">
+                            <i class="fas fa-chart-line mr-1"></i>Line
+                        </button>
+                        <button class="chart-type-btn bg-gray-100 text-gray-700 py-1 px-3 rounded-md text-sm hover:bg-gray-200 transition-all" data-type="bar">
+                            <i class="fas fa-chart-bar mr-1"></i>Bar
+                        </button>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="mainTrendChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Secondary Charts Row -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                <!-- Spending by Category -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-6">Spending by Category</h2>
+                    <div class="chart-container" style="height: 300px;">
+                        <canvas id="categoryChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Monthly Comparison -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-6">Monthly Comparison</h2>
+                    <div class="chart-container" style="height: 300px;">
+                        <canvas id="comparisonChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Insights Section -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                <h2 class="text-xl font-semibold text-gray-800 mb-6">AI-Powered Insights</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <div class="flex items-start mb-2">
+                            <i class="fas fa-lightbulb text-yellow-500 mt-1 mr-3 text-xl"></i>
+                            <div>
+                                <h3 class="font-semibold text-gray-800">Spending Alert</h3>
+                                <p class="text-sm text-gray-600">Your food expenses are 18% higher than last month. Consider meal planning to reduce costs.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-green-50 p-4 rounded-lg">
+                        <div class="flex items-start mb-2">
+                            <i class="fas fa-piggy-bank text-green-500 mt-1 mr-3 text-xl"></i>
+                            <div>
+                                <h3 class="font-semibold text-gray-800">Savings Opportunity</h3>
+                                <p class="text-sm text-gray-600">You could save $120/month by reducing entertainment expenses by 25%.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-purple-50 p-4 rounded-lg">
+                        <div class="flex items-start mb-2">
+                            <i class="fas fa-chart-line text-purple-500 mt-1 mr-3 text-xl"></i>
+                            <div>
+                                <h3 class="font-semibold text-gray-800">Positive Trend</h3>
+                                <p class="text-sm text-gray-600">Your savings rate has improved by 7% over the last 3 months. Keep it up!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Transaction Highlights -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h2 class="text-xl font-semibold text-gray-800">Transaction Highlights</h2>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Description</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Category</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Amount</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Trend</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">15 Nov</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Grocery Store</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">Food</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-red-600">-$125.75</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="text-red-500"><i class="fas fa-arrow-up mr-1"></i>22%</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">12 Nov</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Electric Bill</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Utilities</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-red-600">-$85.25</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="text-green-500"><i class="fas fa-arrow-down mr-1"></i>8%</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">10 Nov</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Freelance Payment</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Income</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-green-600">+$750.00</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="text-green-500"><i class="fas fa-arrow-up mr-1"></i>15%</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">5 Nov</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Restaurant</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">Food</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-red-600">-$65.40</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="text-red-500"><i class="fas fa-arrow-up mr-1"></i>42%</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Filter buttons
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                filterBtns.forEach(b => b.classList.remove('filter-active', 'bg-purple-600', 'text-white'));
+                this.classList.add('filter-active', 'bg-purple-600', 'text-white');
+                // Here you would update the charts based on the selected filter
+            });
+        });
+
+        // Chart type buttons
+        const chartTypeBtns = document.querySelectorAll('.chart-type-btn');
+        chartTypeBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                chartTypeBtns.forEach(b => b.classList.remove('bg-purple-100', 'text-purple-700', 'active'));
+                this.classList.add('bg-purple-100', 'text-purple-700', 'active');
+                const chartType = this.getAttribute('data-type');
+                mainTrendChart.config.type = chartType;
+                mainTrendChart.update();
+            });
+        });
+
+        // Initialize main trend chart
+        const mainTrendCtx = document.getElementById('mainTrendChart').getContext('2d');
+        const mainTrendChart = new Chart(mainTrendCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov'],
+                datasets: [{
+                    label: 'Income',
+                    data: [3200, 2900, 3500, 3800, 4000, 4200, 3900, 4100, 4300, 4500, 4700],
+                    borderColor: '#10B981',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    tension: 0.3,
+                    fill: true,
+                    borderWidth: 2
+                },
+                {
+                    label: 'Expenses',
+                    data: [2200, 2400, 2600, 2800, 3000, 2900, 3100, 3200, 3000, 3100, 3300],
+                    borderColor: '#EF4444',
+                    backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                    tension: 0.3,
+                    fill: true,
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            drawBorder: false
+                        },
+                        ticks: {
+                            callback: function(value) {
+                                return '$' + value;
+                            }
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        // Initialize category chart
+        const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+        new Chart(categoryCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Food & Dining', 'Housing', 'Transportation', 'Entertainment', 'Utilities', 'Other'],
+                datasets: [{
+                    data: [2150, 1850, 1200, 850, 650, 1750],
+                    backgroundColor: [
+                        '#3B82F6',
+                        '#10B981',
+                        '#F59E0B',
+                        '#8B5CF6',
+                        '#EF4444',
+                        '#64748B'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.label || '';
+                                const value = context.raw || 0;
+                                const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                const percentage = Math.round((value / total) * 100);
+                                return `${label}: $${value} (${percentage}%)`;
+                            }
+                        }
+                    }
+                },
+                cutout: '65%'
+            }
+        });
+
+        // Initialize comparison chart
+        const comparisonCtx = document.getElementById('comparisonChart').getContext('2d');
+        new Chart(comparisonCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Sep', 'Oct', 'Nov'],
+                datasets: [{
+                    label: '2023',
+                    data: [4300, 4500, 4700],
+                    backgroundColor: '#7C3AED',
+                    borderWidth: 0
+                },
+                {
+                    label: '2022',
+                    data: [3900, 4100, 4300],
+                    backgroundColor: '#A78BFA',
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label + ': $' + context.raw;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            drawBorder: false
+                        },
+                        ticks: {
+                            callback: function(value) {
+                                return '$' + value;
+                            }
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
